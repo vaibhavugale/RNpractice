@@ -5,53 +5,34 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { useEffect } from 'react';
+
 import {
   NativeModules,
   StatusBar,
   StyleSheet,
-  useColorScheme,
-  View,
+
 } from 'react-native';
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-
+import AppelInvites from './screens/appel-invites';
+import { Gesture, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const { UPIInstalledApps } = NativeModules;
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+
 
   return (
     <SafeAreaProvider>
-      {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
-      <AppContent />
+      <GestureHandlerRootView style={{flex:1}}>
+        <StatusBar barStyle={'dark-content'} />
+        <AppelInvites />
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
 
-  useEffect(() => {
-    const f = async () => {
-      const list = await UPIInstalledApps.getInstalledUPIAppLists();
-      console.log(list, '@list');
-    };
-    f();
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      {/* <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      /> */}
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
